@@ -4,17 +4,20 @@ from bs4 import BeautifulSoup
 # HTML 코드 받아오기
 response = requests.get("https://workey.codeit.kr/orangebottle/index")
 
-# BeautifulSoup 타입으로 변환
+# BeautifulSoup 사용해서 HTML 코드 정리
 soup = BeautifulSoup(response.text, 'html.parser')
 
-# "phoneNum" 클래스를 가진 span 태그 선택하기
-phone_number_tags = soup.select('span.phoneNum')
+branch_infos = []
 
-phone_numbers = []
+# 모든 지점에 대한 태그 가져오기
+branch_tags = soup.select('div.branch')
 
-# 텍스트 추출해서 리스트에 추가하기
-for tag in phone_number_tags:
-    phone_numbers.append(tag.get_text())
+for branch_tag in branch_tags:
+    # 각 태그에서 지점 이름, 전화번호 가져오기
+    branch_name = branch_tag.select_one('p.city').get_text()
+    address = branch_tag.select_one('p.address').get_text()
+    phone_number = branch_tag.select_one('span.phoneNum').get_text()
+    branch_infos.append([branch_name, address, phone_number])
 
 # 테스트 코드
-print(phone_numbers)
+print(branch_infos)
