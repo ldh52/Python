@@ -10,7 +10,7 @@ for year in range(2010, 2019):
 
     for month in range(1, 13):
         for weekIndex in range(0, 5):
-            url = "https://workey.codeit.kr/ratings/index?year={}&month={}&weekIndex={}"
+            url = "https://workey.codeit.kr/ratings/index?year={}&month={}&weekIndex={}".format(year, month, weekIndex)
             response = requests.get(url)
             rating_page = response.text
             soup = BeautifulSoup(rating_page, 'html.parser')
