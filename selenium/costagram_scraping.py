@@ -40,6 +40,11 @@ for post in posts:
     post.click()
     sleep(0.5)
 
+    # 이미지 주소 가져오기
+    style_attr = driver.find_element(by=By.CSS_SELECTOR, value='.post-container__image').get_attribute('style')
+    image_url = style_attr.split('"')[1]
+    print(image_url)
+
     # 닫기 버튼 클릭
     driver.find_element(by=By.CSS_SELECTOR, value='.close-btn').click()
     sleep(0.5)
